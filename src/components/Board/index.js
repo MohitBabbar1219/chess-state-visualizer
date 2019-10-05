@@ -10,7 +10,8 @@ const Board = (props) => {
   const positionPieceMap = {};
   props.gameState.forEach(piece => positionPieceMap[(piece.position.y * 8) + piece.position.x] = piece);
   console.log(positionPieceMap);
-
+  let xIndex = 0;
+  let yIndex = 0;
   return <div className="chess-board mx-auto">
     {
       [...Array(64).keys()].map((index) => {
@@ -19,10 +20,15 @@ const Board = (props) => {
           const temp = chessBackground[0];
           chessBackground[0] = chessBackground[1];
           chessBackground[1] = temp;
+          xIndex = 0;
+          yIndex += 1;
         }
+        xIndex += 1;
         return <div style={chessBackground[index % 2]}>
           <div className="position-relative">
-            {piece ? <Piece name={piece.name} color={piece.set} /> : null}
+            <p className="font-weight-bold">{`${xIndex - 1},${yIndex - 1}`}</p>
+            {piece ?
+              <Piece name={piece.name} color={piece.set}/> : null}
           </div>
         </div>
       })
